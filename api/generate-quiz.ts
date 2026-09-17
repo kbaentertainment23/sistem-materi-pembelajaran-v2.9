@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { generateQuizQuestionsWithAI } from './_lib/quizGeneratorCore';
+import { generateQuizQuestionsWithAI } from './_lib/quizGeneratorCore.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Safe CORS for Vercel
