@@ -1,5 +1,5 @@
 import { GoogleGenAI, Type, ThinkingLevel } from '@google/genai';
-import { getFallbackQuizBankQuestions } from './fallbackQuizBank';
+import { getFallbackQuizBankQuestions } from './fallbackQuizBank.js';
 
 export function getGeminiApiKey(): string | undefined {
   const key =
