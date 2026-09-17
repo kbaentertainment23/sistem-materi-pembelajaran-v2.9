@@ -1,0 +1,73 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // 1. Mata Pelajaran (Subjects)
+    match /subjects/{document} {
+      allow read: if true;
+      allow write: if request.resource.data.name is string 
+                   && request.resource.data.name.size() > 0
+                   && request.resource.data.name.size() <= 150;
+      allow delete: if true;
+    }
+
+    // 2. Kategori / Topik Materi (Categories)
+    match /categories/{document} {
+      allow read: if true;
+      allow write: if request.resource.data.title is string 
+                   && request.resource.data.title.size() > 0
+                   && request.resource.data.title.size() <= 200;
+      allow delete: if true;
+    }
+
+    // 3. Modul & Media Pembelajaran (Materials)
+    match /materials/{document} {
+      allow read: if true;
+      allow write: if request.resource.data.title is string 
+                   && request.resource.data.title.size() > 0
+                   && request.resource.data.title.size() <= 300;
+      allow delete: if true;
+    }
+
+    // 4. Akun & Direktori Guru (Teachers)
+    match /teachers/{document} {
+      allow read: if true;
+      allow write: if (request.resource.data.name is string 
+                   && request.resource.data.name.size() > 0)
+                   || (resource != null && resource.data.name is string);
+      allow delete: if true;
+    }
+
+    // 5. Akun & Direktori Siswa (Students)
+    match /students/{document} {
+      allow read: if true;
+      allow write: if (request.resource.data.nama is string 
+                   && request.resource.data.nama.size() > 0)
+                   || (resource != null && resource.data.nama is string);
+      allow delete: if true;
+    }
+
+    // 6. Progres Belajar & Rekap Nilai Siswa (Student Progress)
+    match /student_progress/{document} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // 7. Pengaturan Sistem & Konfigurasi Akademik (Settings & Config)
+    match /settings/{document} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    match /system_config/{document} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // 8. Strict Catch-all: Tolak akses ke dokumen atau koleksi yang tidak terdaftar
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
+

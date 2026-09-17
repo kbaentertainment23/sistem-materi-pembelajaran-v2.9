@@ -1,0 +1,151 @@
+{
+  "entities": {
+    "subject": {
+      "title": "Subject",
+      "description": "Mata pelajaran dalam sistem pembelajaran",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "code": { "type": "string" },
+        "description": { "type": "string" },
+        "icon": { "type": "string" },
+        "order": { "type": "number" },
+        "targetGrades": { "type": "array" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["name", "order"]
+    },
+    "category": {
+      "title": "Category",
+      "description": "Topik atau bab materi dalam mata pelajaran",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "subjectId": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "icon": { "type": "string" },
+        "order": { "type": "number" },
+        "prerequisiteCategoryId": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["title", "order"]
+    },
+    "material": {
+      "title": "Material",
+      "description": "Modul ajar digital, slide presentasi, dokumen, atau formulir evaluasi",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "categoryId": { "type": "string" },
+        "title": { "type": "string" },
+        "type": { "type": "string" },
+        "originalUrl": { "type": "string" },
+        "embedUrl": { "type": "string" },
+        "order": { "type": "number" },
+        "description": { "type": "string" },
+        "learningObjectives": { "type": "string" },
+        "isPublished": { "type": "boolean" },
+        "reflectionQuestions": { "type": "array" },
+        "quizQuestions": { "type": "array" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["categoryId", "title", "order"]
+    },
+    "teacher": {
+      "title": "TeacherAccount",
+      "description": "Akun guru pengampu",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "username": { "type": "string" },
+        "nip": { "type": "string" },
+        "role": { "type": "string" },
+        "assignedSubjectIds": { "type": "array" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["name", "username"]
+    },
+    "student": {
+      "title": "StudentAccount",
+      "description": "Data akun siswa",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "nama": { "type": "string" },
+        "nisn": { "type": "string" },
+        "kelas": { "type": "string" },
+        "username": { "type": "string" },
+        "password": { "type": "string" },
+        "isOnline": { "type": "boolean" },
+        "lastActive": { "type": "string" },
+        "lastLogin": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["nama", "nisn", "kelas"]
+    },
+    "studentProgress": {
+      "title": "StudentProgress",
+      "description": "Rekapitulasi pencapaian dan aktivitas siswa",
+      "type": "object",
+      "properties": {
+        "studentId": { "type": "string" },
+        "completedMaterialIds": { "type": "array" },
+        "quizScores": { "type": "object" },
+        "activityLogs": { "type": "array" },
+        "lastActiveAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["studentId"]
+    },
+    "setting": {
+      "title": "SystemSetting",
+      "description": "Pengaturan sistem dan preferensi tampilan",
+      "type": "object",
+      "properties": {
+        "adminPin": { "type": "string" },
+        "siteTitle": { "type": "string" },
+        "minQuizScoreToUnlock": { "type": "number" },
+        "themeConfig": { "type": "object" },
+        "updatedAt": { "type": "string" }
+      }
+    }
+  },
+  "firestore": {
+    "/subjects/{subjectId}": {
+      "schema": "subject",
+      "description": "Daftar mata pelajaran kurikulum"
+    },
+    "/categories/{categoryId}": {
+      "schema": "category",
+      "description": "Daftar topik / bab materi ajar"
+    },
+    "/materials/{materialId}": {
+      "schema": "material",
+      "description": "Modul dan bahan ajar digital siswa"
+    },
+    "/teachers/{teacherId}": {
+      "schema": "teacher",
+      "description": "Daftar akun pengajar"
+    },
+    "/students/{studentId}": {
+      "schema": "student",
+      "description": "Daftar akun siswa"
+    },
+    "/student_progress/{studentId}": {
+      "schema": "studentProgress",
+      "description": "Riwayat dan capaian progres belajar siswa"
+    },
+    "/settings/{settingId}": {
+      "schema": "setting",
+      "description": "Konfigurasi administrasi dan tema aplikasi"
+    }
+  }
+}
